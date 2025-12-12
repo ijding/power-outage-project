@@ -2,12 +2,12 @@
 ### How does location and other data factors correlate to different power outage characteristics?
 **Irving Ding**
 
-This is a Data Science project based on analyzing power outage data from "Data on major power outage events in the continental U.S" by Mukherjee et. al. This was created as part of the final project for DSC 80 at UCSD.
+This is a Data Science project based on analyzing power outage data from "Data on major power outage events in the continental U.S" by Mukherjee et. al. 
 
 # Introduction
 This project analyzes a datset of major power outages that occured in the United States from 2000-2016, defined as any power outage affecting more than 50,000 customers or losing more than 300 MW. Power outages affect many, and have far reaching consequences both in everyday life, industry, and economy. This dataset provides insight into how outages occur, how often, where, why, and more. In particular, this analysis hopes to elucidate connections between the geographic region where outages occur, and how they may correlate to other variables and outage features, such as their cause and severity.
 
-This dataset features 1534 observations and 56 columns. The dataset includes a variety of columns, though the ones most pertinent to the investigation and exploration performed during thisw project are:
+This dataset features 1534 observations and 56 columns. The dataset includes a variety of columns, though the ones most pertinent to the investigation and exploration performed during this project are:
 
 + `YEAR`: The year an outage occured
 + `MONTH`: The month an outage occured
@@ -33,7 +33,7 @@ The data was downloaded as an Excel file, and converted into a dataframe in pyth
 
 To clean the data, I first combined OUTAGE.START.DATE and OUTAGE.START.TIME into a single OUTAGE.START column (dropping the other two columns). This was done thanks to panda's DateTime objects. The same was done on OUTAGE.RESTORATION.DATE and OUTAGE.RESTORATION.TIME to create a single OUTAGE.RESTORATION column. 
 
-Next, all 0 values in DEMAND.LOSS.MW, CUSTOMERS.AFFECTED, and OUTAGE.DURATION were converted into NaN values. Since all the outages in the dataset are major, they should likely have some effect on these columns, so 0 values were treaed as indicative to some empty or missing value during the data collection process.
+Next, all 0 values in DEMAND.LOSS.MW, CUSTOMERS.AFFECTED, and OUTAGE.DURATION were converted into NaN values. Since all the outages in the dataset are major (and thus, should have some observable effect on customers or demand loss, and consequently, the duration), 0 values were treated as indicative to some empty or missing value during the data collection process.
 
 A truncated version of the resulting dataframe (first few rows, alongside a selection of columns) is reproduced below
 
@@ -242,11 +242,11 @@ Using the 'entropy' criterion, the decision tree was trained. No max_depth was s
 
 Four new features were added in an effort to improve the accuracy of the model. CLIMATE.CATEGORY is a nominal categorical variable, chosen because it describes 'climate episodes' of each year; warmer or colder weather may have effects on what kinds of outages occur. This column was one-hot encoded. 'OUTAGE.START' is being included, as it includes time data about when the outage occurs; the column was transformed to retrieve the time of day each outage occurs in (specifically which hour), since it may have correlations to certain outage causes (e.g. outages from 'intentional attacks' may be more common during nighttime than daytime). MONTH is being included, since seasonal weather might make certain outages more common during certain times of the year. Finally, TOTAL.CUSTOMERS here is included, as the number of customer a region services may be linked to an outage's severity.
 
-A grid search was performed to find optimal hyperparameters for the model, alongside 5-fold cross validation. Two different modelling algorithms were tested, a decision tree and a random forest. The effectiveness of these two classifiers after being trained was compared on unseen tested data.
+A grid search was performed to find optimal hyperparameters for the model, alongside 5-fold cross validation. Two different modelling algorithms were tested, a decision tree and a random forest. The effectiveness of these two classifiers after being trained was compared on the same unseen test data.
 
 The grid search resulted in a decision tree with a gini criterion, a max_depth of 5, and a min_samples_split of 20. A score of **70% accuracy was achieved on the training data**, while an accurate of about **63% was achieved on the test data**. Though there were improvements, they were relatively marginal.
 
-The grid search for the random forest produced the following hyperparameters: a gini criterion, a min_samples_split of 5, no max_depth, and 50 estimators for each classifier. The result was a **93% accuracy on training data** and a **70% accuracy on test data**, the best performance on unseen data out of any model so far. Even though the training accuracy is quite high, the random forest is able to still produce relatively higher scores on testing data thanks to its resistance to overfitting. Because of its performance, the random forest was chosen as the preferred final model of this project.
+The grid search for the random forest produced the following hyperparameters: a gini criterion, a min_samples_split of 5, a max_depth, and 50 estimators for each classifier. The result was a **93% accuracy on training data** and a **70% accuracy on test data**, the best performance on unseen data out of any model so far. Even though the training accuracy is quite high, the random forest is able to still produce relatively higher scores on testing data thanks to its resistance to overfitting. Because of its performance, the random forest was chosen as the preferred final model of this project.
 
 # Fairness Analysis
 
