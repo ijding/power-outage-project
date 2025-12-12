@@ -181,7 +181,7 @@ Since we are analyzing the distribution of a categorical variable, and how it ch
 
 A p-value of 0.0 provides strong evidence against the null hypothesis of this individual test (that the Central and West regions have the same distribution of 'CAUSE.CATEGORY'). However, in order to answer the overall question of our proposed null hypothesis, multiple testing would need to be performed, repeating this same test for every possible pair of values in CLIMATE.REGION. (Climate Region was chosen for this reason over other variables such as State or NERC Region, since its relatively low number of unique values means there are less combinations).
 
-After obtaining a p-value for each test, correction will need to be performed. During multiple testing, since many random tests are being conducted to answer the null hypothesis, the chance of a false-positive becomes more common (since we're conducting so many tests its possible we'll reject one of them incorrectly by chance). Thus, we apply Bonferonni correction on our p-values, a form of correction that helps control for Type I errors in our testing process. Bonferonni is a relativeley simple form of correction, we can simply obtain our correct p_values by multiplying each one by the number of tests performed (capping at 1.0).
+After obtaining a p-value for each test, correction will need to be performed. During multiple testing, since many random tests are being conducted to answer the null hypothesis, the chance of a false-positive becomes more common (since we're conducting so many tests its possible we'll reject one of them incorrectly by chance). Thus, we apply Bonferonni correction on our p-values, a form of correction that helps control for Type I errors in our testing process. Bonferonni is a relativeley simple form of correction, we can simply obtain our correced p-values by multiplying each one by the number of tests performed (capping at 1.0).
 
 |                                       |   Original |   Bonferonni |
 |:--------------------------------------|-----------:|-------------:|
@@ -222,7 +222,7 @@ After obtaining a p-value for each test, correction will need to be performed. D
 | East North Central_West               |     0      |       0      |
 | South_Northeast                       |     0      |       0      |
 
-While some region pairs had higher p-values, we can see that quite a few tests have very low corrected p-values, providing strong evidence against our null hypothesis. There is indeed at least one (and likely multiple) pairs of climate regions with different distributions of 'CAUSE.CATEGORY'.
+While some region pairs had higher p-values, we can see that quite a few tests have very low corrected p-values, providing strong evidence against our null hypothesis. It is quite probable that there is at least one (and likely multiple) pairs of climate regions with different distributions of 'CAUSE.CATEGORY'.
 
 # Framing a Prediction Problem
 
@@ -250,7 +250,7 @@ The grid search for the random forest produced the following hyperparameters: a 
 
 # Fairness Analysis
 
-Since our search tree does not perform binary classification, this makes metrics such as precision and recall difficult to copmute. We'll rely on accuracy score as our evaluation metric. 
+Since our search tree does not perform binary classification, this makes metrics such as precision and recall difficult to compute. We'll rely on accuracy score as our evaluation metric. 
 
 The model was analyzed for its fairness when testing on data from different states. We'll focus specifically on California and Texas, the two states with the most outages (as seen in our univariate data exploration). We'll perform a permutation test at a significance level of 0.01 to analyze our model's fairness, using the absolute difference in scores as our test statistic.
 
@@ -265,4 +265,4 @@ The model was analyzed for its fairness when testing on data from different stat
   frameborder="0"
 ></iframe>
 
-The resulting p-value was approximatey 0.55. This is insufficient evidence to reject the null hypothesis. 
+The resulting p-value was approximatey 0.11. This is insufficient evidence to reject the null hypothesis. 
