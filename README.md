@@ -1,6 +1,7 @@
 # Power Outage Data Analysis Project
 ### How does location and other data factors correlate to different power outage characteristics?
 **Irving Ding**
+
 This is a Data Science project based on analyzing power outage data from "Data on major power outage events in the continental U.S" by Mukherjee et. al. This was created as part of the final project for DSC 80 at UCSD.
 
 # Introduction
@@ -36,13 +37,13 @@ Next, all 0 values in DEMAND.LOSS.MW, CUSTOMERS.AFFECTED, and OUTAGE.DURATION we
 
 A truncated version of the resulting dataframe (first few rows, alongside a selection of columns) is reproduced below
 
-| U.S._STATE   | NERC.REGION   | CLIMATE.REGION     | CLIMATE.CATEGORY   |   ANOMALY.LEVEL |   OUTAGE.DURATION | OUTAGE.START        | OUTAGE.RESTORATION   |
-|------:|-------:|--------:|:-------------|:--------------|:-------------------|:-------------------|----------------:|------------------:|:--------------------|:---------------------|
-|     0 |   2011 |       7 | Minnesota    | MRO           | East North Central | normal             |            ... |              3060 | 2011-07-01 17:00:00 | 2011-07-03 20:00:00  |
-|     1 |   2014 |       5 | Minnesota    | MRO           | East North Central | normal             |            ... |                 1 | 2014-05-11 18:38:00 | 2014-05-11 18:39:00  |
-|     2 |   2010 |      10 | Minnesota    | MRO           | East North Central | cold               |            ... |              3000 | 2010-10-26 20:00:00 | 2010-10-28 22:00:00  |
-|     3 |   2012 |       6 | Minnesota    | MRO           | East North Central | normal             |            ... |              2550 | 2012-06-19 04:30:00 | 2012-06-20 23:00:00  |
-|     4 |   2015 |       7 | Minnesota    | MRO           | East North Central | warm               |            ... |              1740 | 2015-07-18 02:00:00 | 2015-07-19 07:00:00  |
+|   OBS |   YEAR |   MONTH | U.S._STATE   | CLIMATE.REGION     |   ... |   OUTAGE.DURATION | OUTAGE.RESTORATION   | OUTAGE.START        |
+|------:|-------:|--------:|:-------------|:-------------------|----------------:|------------------:|:---------------------|:--------------------|
+|     0 |   2011 |       7 | Minnesota    | East North Central |   ... |              3060 | 2011-07-03 20:00:00  | 2011-07-01 17:00:00 |
+|     1 |   2014 |       5 | Minnesota    | East North Central |   ... |                 1 | 2014-05-11 18:39:00  | 2014-05-11 18:38:00 |
+|     2 |   2010 |      10 | Minnesota    | East North Central |   ... |              3000 | 2010-10-28 22:00:00  | 2010-10-26 20:00:00 |
+|     3 |   2012 |       6 | Minnesota    | East North Central |   ... |              2550 | 2012-06-20 23:00:00  | 2012-06-19 04:30:00 |
+|     4 |   2015 |       7 | Minnesota    | East North Central |   ... |              1740 | 2015-07-19 07:00:00  | 2015-07-18 02:00:00 |
 
 ## Data Exploration
 
@@ -233,7 +234,7 @@ This will be a multi-class classification problem, with a response variable of C
 
 The first model was a decision tree classifier. Two column features were used, the categorical nominal 'CLIMATE.REGION', which was one-hot encoded (dropping one of the columns to avoid collinearity), and the numerical column 'OUTAGE.DURATION'. Probabalistic imputation was done to fill in missing NA values. Additionally, the response variable, 'CAUSE.CATEGORY' had to be label encoded (as sklearn requires the data to be encoded numerically to perform the classification).
 
-!(Plot of Decision Tree)[assets/model1.png]
+![Plot of Decision Tree](assets/model1.png)
 
 Using the 'entropy' criterion, the decision tree was trained. No max_depth was specified beforehand, allowing sklearn to choose an appropriate depth. The resulting tree has approximately 20 layers. With an accuracy of about **95% on training data** and **58% on unseen test data** it is likely that this tree is overfitting to the data. The max_depth hyperparameter should be chosen with more precision in order to avoid overfitting while still providing useful classification.
 
