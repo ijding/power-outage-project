@@ -168,7 +168,7 @@ Next, a hypothesis test was conducted to explore associations between what regio
 
 **Null Hypothesis**: The distribution of CAUSE.CATEGORY is the same across all climate regions
 
-**Alternative Hypothesis**: There is at least one pair of climate regions that have differing distributinos of CAUSE.CATEGORY
+**Alternative Hypothesis**: There is at least one pair of climate regions that have differing distributions of CAUSE.CATEGORY
 
 Since we are analyzing the distribution of a categorical variable, and how it changes, TVD will be a suitable test statistic. Permutation testing will be performed, using the regions as labels.  We begin with an analysis of a single pair of regions (Central and West) before moving on to perform multiple testing.
 
@@ -181,7 +181,7 @@ Since we are analyzing the distribution of a categorical variable, and how it ch
 
 A p-value of 0.0 provides strong evidence against the null hypothesis of this individual test (that the Central and West regions have the same distribution of 'CAUSE.CATEGORY'). However, in order to answer the overall question of our proposed null hypothesis, multiple testing would need to be performed, repeating this same test for every possible pair of values in CLIMATE.REGION. (Climate Region was chosen for this reason over other variables such as State or NERC Region, since its relatively low number of unique values means there are less combinations).
 
-After obtaining a p-value for each test, correction will need to be performed. During multiple testing, since many random tests are being conducted to answer the null hypothesis, the chance of a false-positive becomes more common (since we're conducting so many tests its possible we'll reject one of them incorrectly by chance). Thus, we apply Bonferonni correction on our p-values, a form of correction that helps control for Type I errors in our testing process. Bonferonni is a relativeley simple form of correction, we can simply obtain our correced p-values by multiplying each one by the number of tests performed (capping at 1.0).
+After obtaining a p-value for each test, correction will need to be performed. During multiple testing, since many random tests are being conducted to answer the null hypothesis, the chance of a false-positive becomes more common (since we're conducting so many tests its possible we'll reject one of them incorrectly by chance). Thus, we apply Bonferonni correction on our p-values, a form of correction that helps control for Type I errors in our testing process. Bonferonni is a relatively simple form of correction, we can simply obtain our correced p-values by multiplying each one by the number of tests performed (capping at 1.0).
 
 |                                       |   Original |   Bonferonni |
 |:--------------------------------------|-----------:|-------------:|
